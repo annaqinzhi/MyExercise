@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -18,30 +17,15 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ListIterator;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -52,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private GridView gridView;
     private SearchView searchView;
 
-    private ArrayList<User> userList=new ArrayList<User>();
+    private ArrayList<User> userList = new ArrayList<User>();
     private UserBaseAdapter userBaseAdapter;
     private ProgressDialog progressBar;
     private Context context;
@@ -62,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        disposable=new Disposable() {
+        disposable = new Disposable() {
             @Override
             public void dispose() {
 
@@ -80,12 +64,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         gridView = (GridView) findViewById(R.id.gridview);
         gridView.setOnItemClickListener(this);
 
-<<<<<<< HEAD:app/src/main/java/com/dohman/myexercise/MainActivity.java
         Observable.merge(getObservables())
-=======
-        Observable<ArrayList<MovieDetails>> movieDetailsObservable = getObservableData(URL_POPULAR);
-        movieDetailsObservable
->>>>>>> parent of 3ef7695... formatted code:app/src/main/java/com/dohman/apigrupparbete/MainActivity.java
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(getObserver());
@@ -93,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public List<Observable<User>> getObservables() {
-        List<Observable<User>> users= Arrays.asList(
+        List<Observable<User>> users = Arrays.asList(
                 getObservable("mojombo"),
                 getObservable("defunkt"),
                 getObservable("pjhyett"),
@@ -128,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             public void onNext(User user) {
                 Log.d(TAG, "User in Observer is: " + user.getLogin());
 
-                if(user.getPublic_repos()>50){
+                if (user.getPublic_repos() > 50) {
                     userList.add(user);
                 }
                 //userBaseAdapter.notifyDataSetChanged();
@@ -191,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
 
             @Override
-           public boolean onQueryTextChange(String newText) {
+            public boolean onQueryTextChange(String newText) {
                 newText = newText.toLowerCase();
                 final String new_text = newText;
 
